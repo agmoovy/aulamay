@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula May — exercícios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: parceira que desafia, direta e acolhedora
+   IDEA: a apresentação da May virando guia, cada exercício como um cartão de estação do circuito
+   PICTURE: figuras animadas executando cada movimento, em loop
+   COLOUR and TYPE: preto da May, amarelo #FFD100 de acento, Fira Sans
+   LAYOUT: capa com a aula em blocos, filtros por bloco, grade de cartões animados */
+:root{color-scheme:dark;--bg:#0f0f0f;--card:#1a1a1a;--line:#2c2c2c;--ink:#f2f2f2;--mute:#a8a8a8;--y:#FDCB17}
+:root[data-theme=light],:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'DM Sans',system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(28px,4vw,64px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+header.hero{position:relative;overflow:hidden;background:radial-gradient(120% 140% at 8% 0%,#2a2a2a 0%,#111 45%,#050505 100%);min-height:clamp(460px,62vh,640px);display:flex;flex-direction:column}
+.deco{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-in{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;width:100%}
+.top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--mute);max-width:56%}
+.top b{color:var(--ink);font-weight:700;letter-spacing:.02em}.top b i{font-weight:300}
+.hero-text{margin:auto 0;padding:clamp(32px,6vw,72px) 0;max-width:min(560px,52%)}
+h1{margin:0;font-size:clamp(56px,8.4vw,112px);line-height:.95;font-weight:700;letter-spacing:-.01em;text-transform:uppercase}
+h1 i{font-weight:300;background:linear-gradient(90deg,#fff,#bdbdbd);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.08em}
+.kicker{margin:18px 0 0;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:#bdbdbd}.kicker b{font-style:italic;color:#e6e6e6}
+.lede{font-size:17px;color:#cfcfcf;max-width:46ch;margin:18px 0 0}
+.go{display:inline-flex;align-items:center;gap:12px;margin-top:26px;color:var(--ink);text-decoration:none;font-weight:500;min-height:44px}
+.arw{width:40px;height:40px;border-radius:10px;background:var(--y);display:grid;place-items:center;flex:none}
+.go:hover .arw{transform:translateX(3px)}.go:focus-visible{outline:3px solid var(--y);outline-offset:4px;border-radius:10px}
+.plan-band{background:#0b0b0b;border-bottom:1px solid var(--line)}
+.plan-band h2{margin:0 0 6px;font-size:clamp(32px,4vw,44px);line-height:1.05;font-weight:400}.plan-band h2 span{color:var(--y)}
+.plan-band>.wrap>p{margin:0 0 22px;color:var(--mute)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px}
+.steps li{background:linear-gradient(180deg,#1c1c1c,#141414);border:1px solid #262626;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.num{width:28px;height:28px;border-radius:8px;background:#f2f2f2;color:#111;font-weight:700;font-size:14px;display:grid;place-items:center}
+.steps b{font-weight:500;font-size:16px}.steps span{color:var(--y);font-size:14px}.steps .num{color:#111;font-size:14px}
+@media(max-width:760px){.deco{display:none}.hero-text,.top{max-width:100%}.hero-text{padding-bottom:150px}header.hero::after{content:'';position:absolute;right:-10px;bottom:0;width:170px;height:150px;background:linear-gradient(135deg,#FDCB17 60%,#D9A60A);clip-path:polygon(45% 0,100% 0,62% 100%,0 100%)}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+nav.band{position:sticky;top:0;z-index:5;background:rgba(15,15,15,.92);backdrop-filter:blur(8px);padding-block:14px;border-bottom:1px solid var(--line)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{font:inherit;font-size:14px;min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid #3a3a3a;background:transparent;color:var(--ink);cursor:pointer}
+.chip[aria-pressed=true]{background:var(--y);border-color:var(--y);color:#111;font-weight:600}
+.chip:focus-visible,.toggle:focus-visible{outline:3px solid var(--y);outline-offset:2px}
+.toggle{margin-left:auto;font:inherit;font-size:14px;min-height:44px;padding:0 16px;border-radius:999px;border:0;background:#262626;color:var(--ink);cursor:pointer}
+.block-title{display:flex;align-items:baseline;gap:12px;margin:40px 0 16px;flex-wrap:wrap}
+.block-title h2{margin:0;font-size:clamp(30px,3.4vw,40px);line-height:1.05;color:var(--y);font-weight:400}
+.block-title p{margin:0;color:var(--mute);font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:16px}
+.card{background:var(--card);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.stage{background:#141414;border-bottom:1px solid var(--line);aspect-ratio:240/210}
+.stage svg{display:block;width:100%;height:100%}
+.stage.photo{background:#191818;aspect-ratio:620/440;position:relative}
+.stage.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.head h3{margin:0;font-size:20px;line-height:1.2;font-weight:600}
+.reps{color:var(--y);font-weight:600;font-size:15px;text-align:right;flex:none;max-width:48%}
+.eq{color:var(--mute);font-size:14px;margin:-6px 0 0}
+.card ol{margin:0;padding-left:20px;font-size:15px;color:#dcdcdc}
+.card ol li{margin:3px 0}
+.tips{display:grid;gap:6px;margin-top:auto;padding-top:6px;font-size:14px}
+.tips div{border-radius:10px;padding:8px 12px;background:#232323}
+.tips b{font-weight:600}
+.tips .ini b{color:var(--y)}
+.tips .err b{color:#ff8a6b}
+footer.band{color:var(--mute);font-size:14px;border-top:1px solid var(--line);margin-top:40px}
+@media(max-width:760px){.hero{grid-template-columns:minmax(0,1fr)}.toggle{margin-left:0}}
+</style>
+</head>
+<body>
+<header class="hero band">
+<svg class="deco" viewBox="0 0 1200 675" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+ <defs>
+  <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FDCB17"/><stop offset=".55" stop-color="#FCC814"/><stop offset="1" stop-color="#D9A60A"/></linearGradient>
+  <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E9B50F"/><stop offset=".25" stop-color="#FDCB17"/><stop offset="1" stop-color="#FDCB17"/></linearGradient>
+ </defs>
+ <g fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.2">
+  <path d="M0 90 L102 230 L0 262"/><path d="M296 0 L336 58 L382 0"/><path d="M572 230 L660 110"/><path d="M572 230 L742 282"/>
+  <path d="M0 568 L192 508 L192 675"/><path d="M482 675 L482 508 L688 574"/>
+ </g>
+ <polygon points="612,0 940,0 1256,675 921,675" fill="url(#g1)"/>
+ <polygon points="930,118 1240,118 975,675 683,675" fill="url(#g2)"/>
+</svg>
+<div class="wrap hero-in">
+  <div class="top"><b>MAY <i>BOOTCAMP</i></b><span>Asa Sul · Asa Norte · Sudoeste · Águas Claras</span></div>
+  <div class="hero-text">
+    <h1>Aula <i>May</i></h1>
+    <p class="kicker">Guia de <b>exercícios do circuito</b></p>
+    <p class="lede">Cada exercício com a execução ilustrada, os músculos trabalhados, as séries, a versão iniciante e o erro mais comum. Faça no seu ritmo: a turma vai junto.</p>
+    <a class="go" href="#exercicios"><span class="arw"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>Ver os exercícios</a>
+  </div>
+</div>
+</header>
+
+<section class="band plan-band" aria-labelledby="plano"><div class="wrap">
+  <h2 id="plano">Como é <span>a aula</span></h2>
+  <p>Cerca de 1 hora de circuito. Descanso de 15 a 30 s entre exercícios e 1 min entre voltas.</p>
+  <ol class="steps">
+    <li><span class="num">1</span><b>Aquecimento</b><span>1 volta</span></li>
+    <li><span class="num">2</span><b>Pernas e glúteos</b><span>3 voltas</span></li>
+    <li><span class="num">3</span><b>Parte superior</b><span>3 voltas</span></li>
+    <li><span class="num">4</span><b>Cardio e corpo inteiro</b><span>3 voltas</span></li>
+    <li><span class="num">5</span><b>Core</b><span>3 voltas</span></li>
+    <li><span class="num">6</span><b>Volta à calma</b><span>5 min</span></li>
+  </ol>
+</div></section>
+
+<nav class="band" aria-label="Filtrar por bloco"><div class="wrap chips" id="chips"></div></nav>
+
+<main class="band" id="exercicios" style="padding-top:8px"><div class="wrap" id="list"></div></main>
+
+<footer class="band"><div class="wrap">
+  Modelo ilustrativo criado para trabalho acadêmico (IDP). Não é a aula oficial da May Bootcamp; os exercícios devem ser validados por um profissional de educação física antes do uso. @maybootcamp
+</div></footer>
+
+<script>
+{
+const BLOCKS=[
+ ['aquecimento','Aquecimento','1 volta, sem descanso'],
+ ['pernas','Pernas e glúteos','3 voltas'],
+ ['superior','Parte superior','3 voltas'],
+ ['cardio','Cardio e corpo inteiro','3 voltas'],
+ ['core','Core','3 voltas'],
+ ['calma','Volta à calma','cerca de 5 minutos']];
+
+const S={h:[110,125],t:0,hn:[112,124],e:-1,fn:[112,200],ff:[106,200],k:1};
+const P=(o)=>Object.assign({},S,o);
+
+const EX=[
+{b:'aquecimento',n:'Polichinelo',r:'1 × 30',q:'Peso do corpo',
+ s:['Pés juntos, braços ao lado do corpo.','Salte abrindo as pernas e levando os braços acima da cabeça.','Salte de volta à posição inicial, sem parar.'],
+ i:'Sem salto: passo lateral alternado.',x:'Aterrissar com os joelhos travados.',
+ p:[P({}),P({h:[110,116],hn:[118,4],hf:[100,6],e:1,fn:[124,196],ff:[96,196]})]},
+{b:'aquecimento',n:'Agachamento livre',r:'1 × 15',q:'Peso do corpo',
+ s:['Pés na largura do quadril, braços à frente.','Leve o quadril para trás e para baixo, como se fosse sentar.','Desça até as coxas ficarem paralelas ao chão e suba empurrando o chão.'],
+ i:'Agachamento até sentar num banco.',x:'Joelhos caindo para dentro.',
+ p:[P({hn:[166,68]}),P({h:[88,160],t:35,hn:[176,112]})]},
+{b:'aquecimento',n:'Rotação de quadril e ombros',r:'1 × 10 cada lado',q:'Peso do corpo',
+ s:['Em pé, braços estendidos.','Faça círculos amplos com os braços, para frente e depois para trás.','Em seguida, mãos na cintura e círculos com o quadril.'],
+ i:'Círculos menores e mais lentos.',x:'Fazer rápido demais, sem amplitude.',loop:1,
+ p:[P({hn:[112,10],e:1}),P({hn:[166,68],e:1}),P({hn:[112,124],e:1}),P({hn:[56,68],e:1})]},
+{b:'aquecimento',n:'Corrida estacionária',r:'1 × 30 s',q:'Peso do corpo',
+ s:['Corra no lugar, elevando os joelhos.','Os braços acompanham, opostos às pernas.','Mantenha o tronco reto e o ritmo constante.'],
+ i:'Marcha no lugar.',x:'Bater o calcanhar com força no chão.',
+ p:[P({h:[110,122],hn:[92,108],hf:[140,96],e:1,fn:[128,160],ff:[106,200]}),P({h:[110,122],hn:[140,96],hf:[92,108],e:1,fn:[112,200],ff:[124,162]})]},
+
+{b:'pernas',n:'Agachamento goblet',img:'goblet',r:'3 × 12',q:'Halter ou kettlebell',eq:'kb',
+ s:['Segure o peso junto ao peito, cotovelos para baixo.','Agache com o peito aberto e o peso colado ao corpo.','Suba empurrando o chão com o pé inteiro.'],
+ i:'Agachamento sem peso.',x:'Inclinar o tronco e arredondar as costas.',
+ p:[P({hn:[126,82]}),P({h:[88,160],t:35,hn:[140,124]})]},
+{b:'pernas',n:'Afundo alternado',img:'afundo',r:'3 × 10 por perna',q:'Halteres',eq:'db',
+ s:['Em pé, halteres ao lado do corpo.','Dê um passo à frente e desça até o joelho de trás quase tocar o chão.','Volte empurrando com a perna da frente e troque de lado.'],
+ i:'Sem peso, com uma mão apoiada na parede.',x:'Deixar o tronco cair para a frente.',
+ p:[P({}),P({h:[100,150],hn:[102,148],fn:[136,200],ff:[50,198]})]},
+{b:'pernas',n:'Levantamento terra romeno',img:'romeno',r:'3 × 12',q:'Halteres',eq:'db',
+ s:['Halteres à frente das coxas, joelhos levemente dobrados.','Leve o quadril para trás, descendo os halteres rente às pernas.','Suba contraindo os glúteos, com as costas retas o tempo todo.'],
+ i:'Halteres mais leves.',x:'Arredondar a coluna para descer mais.',
+ p:[P({hn:[116,124]}),P({h:[94,128],t:72,hn:[150,168]})]},
+{b:'pernas',n:'Ponte de glúteo',img:'ponte',r:'3 × 15',q:'Mini band',eq:'band',
+ s:['Deitada de costas, joelhos dobrados, elástico acima dos joelhos.','Eleve o quadril até alinhar joelhos, quadril e ombros.','Segure 1 segundo no alto e desça devagar.'],
+ i:'Sem elástico.',x:'Arquear a lombar em vez de usar o glúteo.',
+ p:[P({h:[118,192],t:-90,hn:[108,197],e:1,fn:[160,200],ff:[154,200]}),P({h:[118,160],t:-115,hn:[108,197],e:1,fn:[160,200],ff:[154,200]})]},
+
+{b:'superior',n:'Flexão de braço',img:'flexao',r:'3 × 10',q:'Peso do corpo',
+ s:['Mãos um pouco mais abertas que os ombros, corpo reto.','Desça o peito até perto do chão, cotovelos a cerca de 45°.','Empurre o chão e volte, sem deixar o quadril cair.'],
+ i:'Joelhos apoiados no chão.',x:'Quadril caído ou empinado.',
+ p:[P({h:[109,169],t:65,hn:[166,200],e:-1,fn:[40,200],ff:[40,200]}),P({h:[112,186],t:78,hn:[166,200],e:-1,fn:[40,200],ff:[40,200]})]},
+{b:'superior',n:'Remada curvada',img:'remada',r:'3 × 12',q:'Halteres',eq:'db',
+ s:['Incline o tronco à frente, costas retas, halteres pendurados.','Puxe os halteres em direção ao quadril, cotovelos rente ao corpo.','Desça com controle.'],
+ i:'Halteres mais leves.',x:'Puxar com impulso do tronco.',
+ p:[P({h:[92,130],t:60,hn:[144,160]}),P({h:[92,130],t:60,hn:[126,126]})]},
+{b:'superior',n:'Desenvolvimento de ombro',img:'desenvolvimento',r:'3 × 10',q:'Halteres',eq:'db',
+ s:['Halteres na altura dos ombros, palmas para a frente.','Empurre para cima até estender os braços.','Desça devagar até a altura dos ombros.'],
+ i:'Sentada, com halteres leves.',x:'Arquear a lombar para empurrar.',
+ p:[P({hn:[118,60],e:-1}),P({hn:[114,10],e:1})]},
+{b:'superior',n:'Remada no TRX',img:'trx',r:'3 × 12',q:'TRX',eq:'trx',
+ s:['Segure as alças com o corpo reto e inclinado para trás.','Puxe o peito em direção às mãos, cotovelos junto ao corpo.','Volte com controle, sem soltar o corpo.'],
+ i:'Corpo mais na vertical (pés mais para trás).',x:'Quadril caindo durante a puxada.',
+ p:[P({h:[116,135],t:-28,hn:[138,57],e:1,fn:[150,200],ff:[145,200]}),P({h:[132,133],t:-15,hn:[140,92],e:-1,fn:[150,200],ff:[145,200]})]},
+{b:'superior',n:'Tríceps no banco',img:'triceps',r:'3 × 12',q:'Banco ou step',eq:'bench',
+ s:['Mãos na borda do banco, quadril logo à frente dele.','Dobre os cotovelos para trás e desça o corpo.','Estenda os braços para subir.'],
+ i:'Joelhos dobrados e pés perto do banco.',x:'Abrir os cotovelos para os lados.',
+ p:[P({h:[92,150],hn:[86,150],hf:[82,150],e:-1,fn:[148,200],ff:[142,200]}),P({h:[100,180],hn:[86,150],hf:[82,150],e:-1,fn:[148,200],ff:[142,200]})]},
+
+{b:'cardio',n:'Kettlebell swing',img:'swing',r:'3 × 15',q:'Kettlebell',eq:'kb',
+ s:['Pés afastados, kettlebell entre as pernas.','Leve o quadril para trás e projete-o à frente com força.','O impulso do quadril leva o kettlebell até a altura do peito.'],
+ i:'Kettlebell mais leve.',x:'Levantar o peso com os braços.',
+ p:[P({h:[94,128],t:60,hn:[116,152]}),P({hn:[166,70],e:1})]},
+{b:'cardio',n:'Burpee',img:'burpee',r:'3 × 10',q:'Peso do corpo',
+ s:['Agache e apoie as mãos no chão.','Leve os pés para trás até a prancha.','Volte os pés, levante e salte com os braços para cima.'],
+ i:'Sem salto e sem flexão.',x:'Deixar o quadril cair na prancha.',loop:1,
+ p:[P({}),P({h:[92,160],t:55,hn:[150,198],e:1}),P({h:[101,169],t:63,hn:[150,200],e:1,fn:[44,200],ff:[44,200]}),P({h:[92,160],t:55,hn:[150,198],e:1}),P({h:[110,110],hn:[114,2],hf:[108,4],e:1,fn:[112,186],ff:[106,186]})]},
+{b:'cardio',n:'Thruster',img:'thruster',r:'3 × 10',q:'Halteres',eq:'db',
+ s:['Halteres nos ombros, agache.','Suba com força e use o impulso para empurrar os halteres para cima.','Desça os halteres aos ombros e agache de novo.'],
+ i:'Sem peso ou com halteres leves.',x:'Separar o movimento em dois tempos.',
+ p:[P({h:[88,160],t:35,hn:[130,104],e:-1}),P({hn:[114,10],e:1})]},
+{b:'cardio',n:'Escalador (mountain climber)',img:'escalador',r:'3 × 20 (10 por perna)',q:'Peso do corpo',
+ s:['Em prancha alta, mãos abaixo dos ombros.','Leve um joelho em direção ao peito.','Troque as pernas rapidamente, com o quadril estável.'],
+ i:'Mãos apoiadas num banco, em ritmo lento.',x:'Quadril subindo e descendo.',fast:1,
+ p:[P({h:[109,169],t:65,hn:[160,200],e:-1,fn:[124,196],ff:[44,200]}),P({h:[109,169],t:65,hn:[160,200],e:-1,fn:[44,200],ff:[124,196]})]},
+{b:'cardio',n:'Salto no step',img:'step',r:'3 × 12',q:'Step ou caixa',eq:'step',
+ s:['De frente para o step, agache levemente.','Salte e aterrisse com os dois pés em cima.','Desça um pé de cada vez.'],
+ i:'Subida no step, sem salto.',x:'Aterrissar só com a ponta dos pés.',
+ p:[P({h:[98,146],t:25,hn:[80,128],e:1}),P({h:[158,94],hn:[184,42],e:1,fn:[162,170],ff:[156,170]})]},
+
+{b:'core',n:'Prancha',img:'prancha',r:'3 × 30 s',q:'Peso do corpo',
+ s:['Antebraços no chão, cotovelos abaixo dos ombros.','Corpo reto da cabeça aos pés, abdômen contraído.','Respire e segure o tempo.'],
+ i:'Joelhos apoiados no chão.',x:'Quadril alto ou caído.',slow:1,
+ p:[P({h:[104,183],t:74,hn:[176,198],e:-1,fn:[30,200],ff:[30,200]}),P({h:[104,180],t:73,hn:[176,198],e:-1,fn:[30,200],ff:[30,200]})]},
+{b:'core',n:'Abdominal remador',img:'remador',r:'3 × 15',q:'Peso do corpo',
+ s:['Deitada, braços estendidos acima da cabeça.','Suba o tronco e traga os joelhos ao peito ao mesmo tempo.','Volte esticando braços e pernas.'],
+ i:'Abdominal curto, só elevando os ombros.',x:'Puxar o pescoço com os braços.',
+ p:[P({h:[110,194],t:-90,hn:[6,192],e:1,fn:[186,198],ff:[182,198]}),P({h:[110,192],t:-25,hn:[142,150],e:1,fn:[150,196],ff:[146,196]})]},
+{b:'core',n:'Russian twist',img:'russian',r:'3 × 20 (10 por lado)',q:'Halter ou anilha',eq:'db',
+ s:['Sentada, tronco inclinado para trás, pés elevados.','Gire o tronco levando o peso de um lado para o outro.','Mantenha o abdômen firme.'],
+ i:'Sem peso e com os pés no chão.',x:'Girar só os braços.',
+ p:[P({h:[110,192],t:-30,hn:[124,150],hf:[120,152],e:-1,fn:[162,170],ff:[158,172]}),P({h:[110,192],t:-30,hn:[98,170],hf:[94,172],e:-1,fn:[162,170],ff:[158,172]})]},
+{b:'core',n:'Prancha lateral',img:'lateral',r:'3 × 20 s por lado',q:'Peso do corpo',
+ s:['Deitada de lado, antebraço sob o ombro.','Eleve o quadril até alinhar o corpo.','Segure e depois troque de lado.'],
+ i:'Joelho de baixo apoiado no chão.',x:'Deixar o quadril cair.',
+ p:[P({h:[112,194],t:78,hn:[186,198],hf:[112,190],e:-1,fn:[36,200],ff:[36,196]}),P({h:[112,178],t:72,hn:[186,198],hf:[112,174],e:-1,fn:[36,200],ff:[36,196]})]},
+
+{b:'calma',n:'Alongamento geral',r:'cerca de 5 min',q:'Pernas, glúteos, ombros e lombar',
+ s:['Incline o tronco à frente para alongar a parte de trás das coxas.','Alongue também quadríceps, glúteos, ombros e lombar.','Segure cada posição de 20 a 30 segundos, respirando.'],
+ i:'Dobre os joelhos o quanto precisar.',x:'Forçar com balanço.',slow:1,
+ p:[P({hn:[114,10],e:1}),P({h:[96,126],t:120,hn:[140,198],e:1})]}
+];
+
+const LT=58,UA=30,FA=28,TH=38,SH=38;
+const rad=d=>d*Math.PI/180;
+function ik(r,t,l1,l2,s){let dx=t[0]-r[0],dy=t[1]-r[1],d=Math.hypot(dx,dy)||0.01;const dc=Math.min(Math.max(d,Math.abs(l1-l2)+0.01),l1+l2-0.01);const a=Math.atan2(dy,dx),A=Math.acos((l1*l1+dc*dc-l2*l2)/(2*l1*dc));const j=[r[0]+l1*Math.cos(a-s*A),r[1]+l1*Math.sin(a-s*A)];const ex=t[0]-j[0],ey=t[1]-j[1],el=Math.hypot(ex,ey)||1;return [j,[j[0]+l2*ex/el,j[1]+l2*ey/el]]}
+const fill=p=>({h:p.h,t:p.t,hn:p.hn,hf:p.hf||[p.hn[0]-4,p.hn[1]],fn:p.fn,ff:p.ff,e:p.e,k:p.k});
+const L=(a,b,u)=>a+(b-a)*u, LP=(a,b,u)=>[L(a[0],b[0],u),L(a[1],b[1],u)];
+function mix(a,b,u){return{h:LP(a.h,b.h,u),t:L(a.t,b.t,u),hn:LP(a.hn,b.hn,u),hf:LP(a.hf,b.hf,u),fn:LP(a.fn,b.fn,u),ff:LP(a.ff,b.ff,u),e:u<.5?a.e:b.e,k:u<.5?a.k:b.k}}
+const seg=(a,b,c,w)=>`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;
+function db(p){return `<g fill="#FFD100"><rect x="${(p[0]-9).toFixed(1)}" y="${(p[1]-2).toFixed(1)}" width="18" height="4" rx="2"/><rect x="${(p[0]-11).toFixed(1)}" y="${(p[1]-6).toFixed(1)}" width="5" height="12" rx="2"/><rect x="${(p[0]+6).toFixed(1)}" y="${(p[1]-6).toFixed(1)}" width="5" height="12" rx="2"/></g>`}
+function kb(p){return `<g><path d="M${(p[0]-6).toFixed(1)} ${(p[1]+2).toFixed(1)} a6 6 0 0 1 12 0" fill="none" stroke="#FFD100" stroke-width="3"/><circle cx="${p[0].toFixed(1)}" cy="${(p[1]+11).toFixed(1)}" r="10" fill="#FFD100"/></g>`}
+function draw(ex,q){
+ const sh=[q.h[0]+LT*Math.sin(rad(q.t)),q.h[1]-LT*Math.cos(rad(q.t))];
+ const hd=[sh[0]+16*Math.sin(rad(q.t)),sh[1]-16*Math.cos(rad(q.t))];
+ const [en,hn]=ik(sh,q.hn,UA,FA,q.e),[ef,hf]=ik(sh,q.hf,UA,FA,q.e);
+ const [kn,fn]=ik(q.h,q.fn,TH,SH,q.k),[kf,ff]=ik(q.h,q.ff,TH,SH,q.k);
+ const far='#5f5f5f',near='#f2f2f2';let o='';
+ if(ex.eq==='step')o+='<rect x="128" y="170" width="64" height="30" rx="4" fill="#2e2e2e" stroke="#4a4a4a"/>';
+ if(ex.eq==='bench')o+='<rect x="34" y="150" width="56" height="50" rx="4" fill="#2e2e2e" stroke="#4a4a4a"/>';
+ if(ex.eq==='trx')o+=`<line x1="214" y1="6" x2="${hn[0].toFixed(1)}" y2="${hn[1].toFixed(1)}" stroke="#FFD100" stroke-width="2"/><circle cx="214" cy="6" r="4" fill="#FFD100"/>`;
+ o+=seg(q.h,kf,far,7)+seg(kf,ff,far,7)+seg(sh,ef,far,6)+seg(ef,hf,far,6);
+ o+=seg(q.h,sh,near,8)+`<circle cx="${hd[0].toFixed(1)}" cy="${hd[1].toFixed(1)}" r="11" fill="${near}"/>`;
+ o+=seg(q.h,kn,near,7)+seg(kn,fn,near,7)+seg(sh,en,near,6)+seg(en,hn,near,6);
+ if(ex.eq==='band')o+=`<circle cx="${kn[0].toFixed(1)}" cy="${(kn[1]+4).toFixed(1)}" r="5" fill="none" stroke="#FFD100" stroke-width="3"/>`;
+ if(ex.eq==='db')o+=db(hn);
+ if(ex.eq==='kb')o+=kb(hn);
+ return o;
+}
+const ease=u=>u*u*(3-2*u);
+function pose(ex,ms){
+ const ps=ex.P,n=ps.length,dur=ex.fast?500:ex.slow?1800:1100;
+ const seq=ex.loop||n>2?ps.map((_,i)=>i):[0,1];
+ const steps=ex.loop?n:2,tt=(ms/dur)%steps,i=Math.floor(tt),u=tt-i;
+ const a=seq[i%seq.length],b=seq[(i+1)%seq.length];
+ return mix(ps[a],ps[b],ease(Math.min(1,u*1.25)));
+}
+EX.forEach((e,i)=>{e.P=e.p.map(fill);e.id='ex'+i});
+
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let filter='todos';
+const chips=document.getElementById('chips'),list=document.getElementById('list');
+chips.innerHTML=[['todos','Todos']].concat(BLOCKS.map(b=>[b[0],b[1]])).map(([k,l])=>`<button class="chip" type="button" data-k="${k}" aria-pressed="${k===filter}">${esc(l)}</button>`).join('');
+function render(){
+ list.innerHTML=BLOCKS.filter(b=>filter==='todos'||b[0]===filter).map(b=>`
+ <section aria-labelledby="h-${b[0]}">
+  <div class="block-title"><h2 id="h-${b[0]}">${esc(b[1])}</h2><p>${esc(b[2])}</p></div>
+  <div class="grid">${EX.filter(e=>e.b===b[0]).map(e=>`
+   <article class="card">
+    ${e.img?`<div class="stage photo"><img src="img/${e.img}.jpg" alt="${esc(e.n)}: posição inicial e final, com os músculos trabalhados em amarelo" loading="lazy"></div>`:''}
+    <div class="body">
+     <div class="head"><h3>${esc(e.n)}</h3><span class="reps">${esc(e.r)}</span></div>
+     <p class="eq">${esc(e.q)}</p>
+     <ol>${e.s.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
+     <div class="tips"><div class="ini"><b>Iniciante:</b> ${esc(e.i)}</div><div class="err"><b>Evite:</b> ${esc(e.x)}</div></div>
+    </div>
+   </article>`).join('')}</div>
+ </section>`).join('');
+ figs=[...list.querySelectorAll('svg[data-id]')].map(s=>({s,g:s.querySelector('.fig'),e:EX.find(x=>x.id===s.dataset.id),v:true}));
+ figs.forEach(f=>io.observe(f.s));
+ paint(performance.now(),true);
+}
+let figs=[],paused=matchMedia('(prefers-reduced-motion: reduce)').matches,last=0;
+const io=new IntersectionObserver(es=>es.forEach(en=>{const f=figs.find(x=>x.s===en.target);if(f)f.v=en.isIntersecting}));
+function paint(ms,all){figs.forEach(f=>{if(all||f.v)f.g.innerHTML=draw(f.e,paused?mix(f.e.P[0],f.e.P[1],1):pose(f.e,ms))})}
+function loop(ms){if(!paused&&ms-last>30){paint(ms);last=ms}requestAnimationFrame(loop)}
+chips.addEventListener('click',ev=>{const b=ev.target.closest('button');if(!b)return;
+ filter=b.dataset.k;chips.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.k===filter));render()});
+render();
+}
+</script>
+</body>
+</html>
